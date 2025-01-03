@@ -1,0 +1,63 @@
+.database-builder {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.database-builder-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: #f3f4f6;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.database-name-input {
+    max-width: 300px;
+}
+
+.database-builder-content {
+    flex: 1;
+    position: relative;
+    background-color: #111827;
+    overflow: hidden;
+}
+
+.table-block {
+    position: absolute;
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    min-width: 250px;
+    z-index: 1000;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.table-columns {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.column-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background-color: #ffffff;
+    border-radius: 0.25rem;
+    border: 1px solid #e5e7eb;
+}
+
+.add-column-button {
+    margin-top: 1rem;
+    width: 100%;
+}

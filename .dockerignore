@@ -1,0 +1,30 @@
+# Git
+.git
+.gitignore
+
+# Build directories
+build/
+bin/
+lib/
+out/
+
+# IDE files
+.vs/
+.vscode/
+*.swp
+*.swo
+CMakeSettings.json
+
+# Conan files
+conanbuildinfo.*
+conan.lock
+graph_info.json
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# OS specific
+.DS_Store
+Thumbs.db

@@ -1,0 +1,16 @@
+[requires]
+drogon/1.8.7
+libpq/14.2
+openssl/3.1.2
+zlib/1.2.13
+jsoncpp/1.9.5
+libssh/0.10.5
+
+[generators]
+CMakeDeps
+CMakeToolchain
+
+[options]
+drogon:shared=False
+openssl:shared=False
+postgresql:shared=False
