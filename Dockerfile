@@ -26,7 +26,7 @@ COPY . .
 RUN mkdir build && cd build && \
     conan install .. --build=missing && \
     cmake .. -DCMAKE_BUILD_TYPE=Release && \
-    cmake --build . --config Release
+    cmake --build /../../../app/backend --config Release
 
 # Финальный образ
 FROM ubuntu:22.04

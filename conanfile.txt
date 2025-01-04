@@ -4,7 +4,7 @@ libpq/14.2
 openssl/3.1.2
 zlib/1.2.13
 jsoncpp/1.9.5
-libssh/0.10.5
+libssh2/1.11.1
 
 [generators]
 CMakeDeps

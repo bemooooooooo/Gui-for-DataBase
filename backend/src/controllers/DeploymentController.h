@@ -5,12 +5,13 @@
 
 using namespace drogon;
 
+// TODO: #17 Разобраться как тут что
 class DeploymentController : public drogon::HttpController<DeploymentController> {
 public:
     METHOD_LIST_BEGIN
-    ADD_METHOD_TO(DeploymentController::saveConfig, "/api/protected/config", Post);
-    ADD_METHOD_TO(DeploymentController::getConfigs, "/api/protected/configs", Get);
-    ADD_METHOD_TO(DeploymentController::deployDatabase, "/api/protected/deploy", Post);
+        ADD_METHOD_TO(DeploymentController::saveConfig, "/api/protected/config", Post);
+        ADD_METHOD_TO(DeploymentController::getConfigs, "/api/protected/configs", Get);
+        ADD_METHOD_TO(DeploymentController::deployDatabase, "/api/protected/deploy", Post);
     METHOD_LIST_END
 
     void saveConfig(const HttpRequestPtr& req,

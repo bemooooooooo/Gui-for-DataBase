@@ -16,12 +16,12 @@ public:
     const std::string& getEmail() const { return email; }
     const std::string& getPasswordHash() const { return passwordHash; }
 
-    static std::optional<User> findByUsername(const std::string& username);
-    static std::optional<User> findById(int id);
-    static User create(const std::string& username, const std::string& email, const std::string& passwordHash);
-    static bool validatePassword(const std::string& password, const std::string& hash);
+    static std::optional<User> findByUsername(const std::string& username); // TODO #12
+    static std::optional<User> findById(int id); // TODO #13
+    static User create(const std::string& username, const std::string& email, const std::string& passwordHash); // TODO: #14 Create user in table
+    static bool validatePassword(const std::string& password, const std::string& hash); // TODO: #15 validation of password in table
 
-    Json::Value toJson() const;
+    Json::Value toJson() const; // TODO: #16 Convert user to JSON
 
 private:
     int id;
