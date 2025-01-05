@@ -4,18 +4,21 @@
 namespace models {
 
 DatabaseConfig::DatabaseConfig(const drogon::orm::Row& row) {
+    Json::Reader parser;
     id = row["id"].as<int>();
     userId = row["user_id"].as<int>();
     name = row["name"].as<std::string>();
-    config = Json::parse(row["config"].as<std::string>());
+    if(!parser.parse(row["config"].as<std::string>(), config)){
+        throw std::exception(parser.getFormatedErrorMessages().c_str());
+    }
     createdAt = row["created_at"].as<std::string>();
     updatedAt = row["updated_at"].as<std::string>();
 }
 
 std::optional<DatabaseConfig> DatabaseConfig::findById(int id) {
-    auto db = Database::getDbClient();
+    drogon::orm::DbClientPtr db = Database::getDbClient();
     try {
-        auto result = db->execSqlSync(
+        drogon::orm::Result result = db->execSqlSync(
             "SELECT * FROM database_configs WHERE id = $1",
             id
         );
@@ -29,10 +32,10 @@ std::optional<DatabaseConfig> DatabaseConfig::findById(int id) {
 }
 
 std::vector<DatabaseConfig> DatabaseConfig::findByUserId(int userId) {
-    auto db = Database::getDbClient();
+    drogon::orm::DbClientPtr db = Database::getDbClient();
     std::vector<DatabaseConfig> configs;
     try {
-        auto result = db->execSqlSync(
+        drogon::orm::Result result = db->execSqlSync(
             "SELECT * FROM database_configs WHERE user_id = $1 ORDER BY created_at DESC",
             userId
         );
@@ -46,26 +49,30 @@ std::vector<DatabaseConfig> DatabaseConfig::findByUserId(int userId) {
 }
 
 DatabaseConfig DatabaseConfig::create(int userId, const std::string& name, const Json::Value& config) {
-    auto db = Database::getDbClient();
+    drogon::orm::DbClientPtr db = Database::getDbClient();
     Json::FastWriter writer;
     std::string configStr = writer.write(config);
-    
-    auto result = db->execSqlSync(
+    try {
+        drogon::orm::Result result = db->execSqlSync(
         "INSERT INTO database_configs (user_id, name, config) VALUES ($1, $2, $3::jsonb) RETURNING *",
         userId,
         name,
         configStr
-    );
-    return DatabaseConfig(result[0]);
+        );
+        return DatabaseConfig(result[0]);
+    } catch (const std::exception& e) {
+        LOG_ERROR << "Error finding database configs by user id: " << e.what();
+    }
+    return DatabaseConfig();
 }
 
 bool DatabaseConfig::update(int id, const std::string& name, const Json::Value& config) {
-    auto db = Database::getDbClient();
+    drogon::orm::DbClientPtr db = Database::getDbClient();
     try {
         Json::FastWriter writer;
         std::string configStr = writer.write(config);
         
-        auto result = db->execSqlSync(
+        drogon::orm::Result result = db->execSqlSync(
             "UPDATE database_configs SET name = $1, config = $2::jsonb, updated_at = CURRENT_TIMESTAMP "
             "WHERE id = $3",
             name,
@@ -80,9 +87,9 @@ bool DatabaseConfig::update(int id, const std::string& name, const Json::Value& 
 }
 
 bool DatabaseConfig::remove(int id) {
-    auto db = Database::getDbClient();
+    drogon::orm::DbClientPtr db = Database::getDbClient();
     try {
-        auto result = db->execSqlSync(
+        drogon::orm::Result result = db->execSqlSync(
             "DELETE FROM database_configs WHERE id = $1",
             id
         );
