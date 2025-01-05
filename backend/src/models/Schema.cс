@@ -1,0 +1,29 @@
+#include "Schema.h"
+
+Json::Value models::Schema::toJson() const {
+  Json::Value result;
+  result["name"] = name;
+  result["id"] = id;
+  result["userId"] = userId;
+  result["description"] = description;
+  result["tables"] = tables;
+  result["relations"] = relations;
+  result["version"] = version;
+  result["createdAt"] = createdAt;
+  result["updatedAt"] = updatedAt;
+  return result;
+}
+
+models::Schema models::Schema::fromJson(const Json::Value& json) {
+  models::Schema result;
+  result.name = json["name"].asString();
+  result.id = json["id"].asInt();
+  result.userId = json["userId"].asInt();
+  result.description = json["description"].asString();
+  result.tables = json["tables"];
+  result.relations = json["relations"];
+  result.version = json["version"].asString();
+  result.createdAt = json["createdAt"].asString();
+  result.updatedAt = json["updatedAt"].asString();
+  return result;
+}

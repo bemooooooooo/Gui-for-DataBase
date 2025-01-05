@@ -19,9 +19,8 @@ public:
     std::string createdAt;
     std::string updatedAt;
     
-    // TODO #2:
     static Schema fromJson(const Json::Value& json);
-    // TODO #3:
+    
     Json::Value toJson() const;
     
     static Schema create(int userId, const std::string& name, 
